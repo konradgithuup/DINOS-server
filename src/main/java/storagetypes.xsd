@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding = "UTF-8" ?>
+<!-- XML in easy steps - Page 84. -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="observationReport" type="ObservationReport"/>
+    <xsd:element name="reportBundle" type="ReportBundle"/>
+    
+    <xsd:simpleType name="tool">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MMB"/>
+            <xsd:enumeration value="WIRESHARK"/>
+            <xsd:enumeration value="EXIFTOOL"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="dataStream">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="network"/>
+            <xsd:enumeration value="memory"/>
+            <xsd:enumeration value="storage"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="dataType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="raw"/>
+            <xsd:enumeration value="hardware"/>
+            <xsd:enumeration value="metadata"/>
+            <xsd:enumeration value="configuration"/>
+            <xsd:enumeration value="communication"/>
+            <xsd:enumeration value="process"/>
+            <xsd:enumeration value="session"/>
+            <xsd:enumeration value="user"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ReportBundle">
+        <xsd:sequence>
+            <xsd:element name="reports" type="ObservationReport" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ObservationReport">
+        <xsd:annotation>
+            <xsd:documentation>Wraps the output of an analysis tool with relevant metadata.</xsd:documentation>
+        </xsd:annotation>
+
+        <xsd:attribute name="observationData" type="xsd:string"/>
+        <xsd:attribute name="storageTimestamp" type="xsd:dateTime"/>
+        <xsd:attribute name="tool" type="tool"/>
+        <xsd:attribute name="dataStream" type="dataStream"/>
+        <xsd:attribute name="dataType" type="dataType"/>
+
+    </xsd:complexType>
+
+</xsd:schema>

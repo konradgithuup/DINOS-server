@@ -1,0 +1,34 @@
+plugins {
+    id("java")
+}
+
+group = "dinos"
+version = "0.9-proof-of-concept"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.0'
+
+    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '4.0.3'
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes "Main-Class": "dinos.ServerCoC"
+    }
+
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
